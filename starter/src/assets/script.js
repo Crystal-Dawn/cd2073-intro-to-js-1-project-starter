@@ -19,43 +19,76 @@
 const products = [
   {
     name: 'Carton of Cherries',
-    price: '4',
-    quantity: '0',
-    productid: '1',
+    price: 4,
+    quantity: 0,
+    productId: 1,
     image: './images/cherry.jpg'
   },
   {
     name: 'Carton of Strawberries',
-    price: '5',
-    quantity: '0',
-    productid: '2',
+    price: 5,
+    quantity: 0,
+    productId: 2,
     image: './images/strawberry.jpg'
   },
   {
     name: 'Bag of Oranges',
-    price: '10',
-    quantity: '0',
-    productid: '3',
+    price: 10,
+    quantity: 0,
+    productId: 3,
     image: './images/orange.jpg'
 }
 ];
 
-const cart = [];
+
 
 /* Declare an empty array named cart to hold the items in the cart */
 
-
+const cart = [];
 
 /* Create a function named addProductToCart that takes in the product productId as an argument
   - addProductToCart should get the correct product based on the productId
   - addProductToCart should then increase the product's quantity
   - if the product is not already in the cart, add it to the cart
 */
+function addProductToCart(productId) {
+  const product = products.find(item => item.productId === productId);
+
+  //check if product exists
+  if (!product) {
+    console.log('Product not found');
+    return;
+  }
+
+  //check if product is already in the cart
+
+  const cartItem = cart.find(item => item.productId === productId);
+
+  //if product is in the cart
+  if (cartItem) {
+    cartItem.quantity += 1;
+
+    //if not in the cart
+  } else {
+    product.quantity = 1;
+    cart.push(product);
+  }
+}
 
 /* Create a function named increaseQuantity that takes in the productId as an argument
   - increaseQuantity should get the correct product based on the productId
   - increaseQuantity should then increase the product's quantity
 */
+
+function increaseQuantity(productId) {
+  const cartItem = cart.find(item => item.productId === productId);
+  if (cartItem) {
+    cartItem.quantity += 1;
+  } else {
+    console.log('Product not found in cart');
+  }
+}
+
 
 /* Create a function named decreaseQuantity that takes in the productId as an argument
   - decreaseQuantity should get the correct product based on the productId
@@ -63,11 +96,14 @@ const cart = [];
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
 
+//function decreaseQuantity() productId
 /* Create a function named removeProductFromCart that takes in the productId as an argument
   - removeProductFromCart should get the correct product based on the productId
   - removeProductFromCart should update the product quantity to 0
   - removeProductFromCart should remove the product from the cart
 */
+
+//function removeProductFromCart() productId
 
 /* Create a function named cartTotal that has no parameters
   - cartTotal should iterate through the cart to get the total cost of all products
@@ -75,7 +111,11 @@ const cart = [];
   Hint: price and quantity can be used to determine total cost
 */
 
+//function cartTotal loop and price array
+
 /* Create a function called emptyCart that empties the products from the cart */
+
+//function emptyCart
 
 /* Create a function named pay that takes in an amount as an argument
   - amount is the money paid by customer
@@ -93,16 +133,18 @@ const cart = [];
    npm run test
 */
 
-module.exports = {
-   products,
-   cart,
-   addProductToCart,
-   increaseQuantity,
-   decreaseQuantity,
-   removeProductFromCart,
-   cartTotal,
-   pay, 
-   emptyCart,
-}
+//*module.exports = {
+   //products,
+   //cart,
+   //addProductToCart,
+   //increaseQuantity,
+   //decreaseQuantity,
+   //removeProductFromCart,
+   //cartTotal,
+  // pay, 
+   //emptyCart,
+//}*
    /* Uncomment the following line if completing the currency converter bonus */
    // currency //
+
+
