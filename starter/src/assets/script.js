@@ -15,7 +15,36 @@
    - strawberry.jpg by Allec Gomes
 */
 
+//MY PRODUCTS/ARRAY
+const products = [
+  {
+    name: 'Carton of Cherries',
+    price: '4',
+    quantity: '0',
+    productid: '1',
+    image: './images/cherry.jpg'
+  },
+  {
+    name: 'Carton of Strawberries',
+    price: '5',
+    quantity: '0',
+    productid: '2',
+    image: './images/strawberry.jpg'
+  },
+  {
+    name: 'Bag of Oranges',
+    price: '10',
+    quantity: '0',
+    productid: '3',
+    image: './images/orange.jpg'
+}
+];
+
+const cart = [];
+
 /* Declare an empty array named cart to hold the items in the cart */
+
+
 
 /* Create a function named addProductToCart that takes in the product productId as an argument
   - addProductToCart should get the correct product based on the productId
@@ -74,6 +103,6 @@ module.exports = {
    cartTotal,
    pay, 
    emptyCart,
-   /* Uncomment the following line if completing the currency converter bonus */
-   // currency
 }
+   /* Uncomment the following line if completing the currency converter bonus */
+   // currency //
