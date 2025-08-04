@@ -70,8 +70,7 @@ function addProductToCart(productId) {
 
     //if not in the cart
   } else {
-    product.quantity = 1;
-    cart.push(product);
+    cart.push({ ...product, quantity: 1}); 
   }
 }
 
@@ -89,21 +88,46 @@ function increaseQuantity(productId) {
   }
 }
 
-
 /* Create a function named decreaseQuantity that takes in the productId as an argument
   - decreaseQuantity should get the correct product based on the productId
   - decreaseQuantity should decrease the quantity of the product
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
+function decreaseQuantity(productId) {
+  const cartItemIndex = cart.findIndex(item => item.productId === productId);
+ 
+  if (cartItemIndex === -1) {
+  console.log('Product not found in cart');
+  return;
+  }
 
-//function decreaseQuantity() productId
+  const cartItem = cart[cartItemIndex];
+  cartItem.quantity -= 1;
+
+  if (cartItem.quantity === 0) {
+    cart.splice(cartItemIndex, 1);
+  }
+}
+
+
 /* Create a function named removeProductFromCart that takes in the productId as an argument
   - removeProductFromCart should get the correct product based on the productId
   - removeProductFromCart should update the product quantity to 0
   - removeProductFromCart should remove the product from the cart
 */
 
-//function removeProductFromCart() productId
+function removeProductFromCart(productId) {
+  const cartItemIndex = cart.findIndex(item => item.productId === productId);
+
+  if (cartItemIndex === -1) {
+    console.log('Product not found in cart');
+    return;
+  }
+ //remove product
+  cart.splice(cartItemIndex, 1);
+}
+
+
 
 /* Create a function named cartTotal that has no parameters
   - cartTotal should iterate through the cart to get the total cost of all products
