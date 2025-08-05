@@ -51,27 +51,35 @@ const cart = [];
   - addProductToCart should then increase the product's quantity
   - if the product is not already in the cart, add it to the cart
 */
+
+/**
+ * Adds a product to the shopping cart.
+ *
+ * Searches for a product by its ID in the `products` array.
+ * - If the product exists and is already in the cart, its quantity is increased by 1.
+ * - If the product exists but is not in the cart, it is added with an initial quantity of 1.
+ * - If the product does not exist, the function returns false.
+ */
 function addProductToCart(productId) {
+  // Search for the product in the products array
   const product = products.find(item => item.productId === productId);
 
-  //check if product exists
+  // If product does not exist, log error and exit
   if (!product) {
     console.log('Product not found');
-    return;
-  }
+    return false; //Failure
+  } 
 
-  //check if product is already in the cart
+  //Increase quantity for product
+  product.quantity += 1;
 
+  // Check if product is already in the cart
   const cartItem = cart.find(item => item.productId === productId);
 
-  //if product is in the cart
-  if (cartItem) {
-    cartItem.quantity += 1;
-
-    //if not in the cart
-  } else {
-    cart.push({ ...product, quantity: 1}); 
+  if (!cartItem) {
+    cart.push(product); // Push product
   }
+  return true; //Success
 }
 
 /* Create a function named increaseQuantity that takes in the productId as an argument
@@ -79,13 +87,24 @@ function addProductToCart(productId) {
   - increaseQuantity should then increase the product's quantity
 */
 
+/**
+ * Increases the quantity of a product in the shopping cart by 1.
+ *
+ * Searches for the product in the cart by its productId.
+ * - If the product exists in the cart, its quantity is incremented by 1.
+ * - If the product does not exist in the cart, the function returns false.
+ */
+
 function increaseQuantity(productId) {
+  // Find Product in the cart
   const cartItem = cart.find(item => item.productId === productId);
-  if (cartItem) {
-    cartItem.quantity += 1;
-  } else {
-    console.log('Product not found in cart');
+  if (!cartItem) {
+    //Product not found in cart, Log error
+    console.log('Product not found');
+    return false; // Failure
   }
+    cartItem.quantity += 1; // Increment quantity by 1
+    return true; // Success
 }
 
 /* Create a function named decreaseQuantity that takes in the productId as an argument
@@ -93,20 +112,34 @@ function increaseQuantity(productId) {
   - decreaseQuantity should decrease the quantity of the product
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
+/**
+ * Decreases the quantity of a product in the shopping cart by 1.
+ *
+ * Searches for the product in the cart by its productId.
+ * - If the product exists, its quantity is decreased by 1.
+ * - If the quantity becomes 0, the product is removed from the cart.
+ * - If the product is not found in the cart, returns false.
+ */
+
 function decreaseQuantity(productId) {
+  // Find index of product in cart
   const cartItemIndex = cart.findIndex(item => item.productId === productId);
  
+  // Check if product was found
   if (cartItemIndex === -1) {
-  console.log('Product not found in cart');
-  return;
+  console.log('Product not found');
+  return false;
   }
 
-  const cartItem = cart[cartItemIndex];
-  cartItem.quantity -= 1;
-
+  //Access product in cart
+  const cartItem = cart[cartItemIndex]; 
+  // Decrease quantity by 1
+  cartItem.quantity -= 1; 
+  // If quantity is 0, remove product from cart
   if (cartItem.quantity === 0) {
     cart.splice(cartItemIndex, 1);
   }
+  return true; //Success
 }
 
 
@@ -115,16 +148,32 @@ function decreaseQuantity(productId) {
   - removeProductFromCart should update the product quantity to 0
   - removeProductFromCart should remove the product from the cart
 */
+/**
+ * Removes a product completely from the shopping cart.
+ *
+ * Searches for the product in the cart by its productId.
+ * - If the product is found, it resets the product's quantity to 0 
+ *   and removes it from the cart.
+ * - If the product is not found in the cart, returns false.
+ */
 
 function removeProductFromCart(productId) {
+  // FInd index of product in cart
   const cartItemIndex = cart.findIndex(item => item.productId === productId);
-
+  // Check if product exists in cart
   if (cartItemIndex === -1) {
-    console.log('Product not found in cart');
-    return;
+    console.log('Product not found');
+    return false; // Flag removal fail
   }
- //remove product
+  // Find product in products array to reset quantity
+  const product = products.find(item => item.productId === productId);
+  // Reset product quantity to zero 
+  if (product) {
+    product.quantity = 0;
+  }
+ // Remove product
   cart.splice(cartItemIndex, 1);
+  return true; // Flag removal success
 }
 
 
@@ -134,12 +183,39 @@ function removeProductFromCart(productId) {
   - cartTotal should return the total cost of the products in the cart
   Hint: price and quantity can be used to determine total cost
 */
+/**
+ * Calculates the total cost of all items in the shopping cart.
+ *
+ * Iterates through the `cart` array, multiplying each item's price
+ * by its quantity to determine the total cost. The sum of all
+ * products' totals is returned.
+ */
+function cartTotal() {
+  let total = 0; 
+  for (let i = 0; i < cart.length; i++) {  //Loop through each item in cart
+    let itemTotal = cart[i].price * cart[i].quantity; //Calculate total for product
+    // Add product's total to overall total
+    total += itemTotal;
+  }
+  return total; // Return grand total
+}
 
-//function cartTotal loop and price array
 
 /* Create a function called emptyCart that empties the products from the cart */
+/**
+ * Empties the shopping cart and resets product quantities.
+ *
+ * This function sets the quantity of all products in the `products` array to 0
+ * and clears the `cart` array, effectively removing all items from the cart.
+ */
 
-//function emptyCart
+function emptyCart() {
+  // Loop through all products
+  for (let i = 0; i < products.length; i++) {  
+    products[i].quantity = 0; //Reset each product quantity to 0
+  }
+  cart.length = 0; //Empty cart
+}
 
 /* Create a function named pay that takes in an amount as an argument
   - amount is the money paid by customer
@@ -147,6 +223,28 @@ function removeProductFromCart(productId) {
   - pay will return a positive number if money should be returned to customer
   Hint: cartTotal function gives us cost of all the products in the cart  
 */
+/**
+ * Processes a payment for the total amount in the cart.
+ *
+ * Adds the given payment amount to the running total (`totalAmountPaid`),
+ * then calculates the remaining balance by subtracting the cart total.
+ * If the remaining balance is zero or positive, the total paid is reset for
+ * the next transaction.
+ */
+
+
+let totalAmountPaid = 0;
+
+function pay(amount) {
+  //add amount to total
+  totalAmountPaid += amount; // Add the current payment to the running total
+  let remainingBalance = totalAmountPaid - cartTotal(); // Calculate remaining balance
+
+  if (remainingBalance >= 0) {
+    totalAmountPaid = 0; //Reset for next transaction
+  }
+  return remainingBalance; // Return negative (owed) or positive (change) amount
+}
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
 
@@ -157,18 +255,19 @@ function removeProductFromCart(productId) {
    npm run test
 */
 
-//*module.exports = {
-   //products,
-   //cart,
-   //addProductToCart,
-   //increaseQuantity,
-   //decreaseQuantity,
-   //removeProductFromCart,
-   //cartTotal,
-  // pay, 
-   //emptyCart,
-//}*
-   /* Uncomment the following line if completing the currency converter bonus */
+module.exports = {
+   products,
+   cart,
+   addProductToCart,
+   increaseQuantity,
+   decreaseQuantity,
+   removeProductFromCart,
+   cartTotal,
+   pay, 
+   emptyCart,
+  }
+   
+  /* Uncomment the following line if completing the currency converter bonus */
    // currency //
 
 
