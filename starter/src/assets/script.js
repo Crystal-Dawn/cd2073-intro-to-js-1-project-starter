@@ -248,6 +248,27 @@ function pay(amount) {
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
 
+const rates = {
+  USD: 1, // base
+  EUR: 0.85, // 1 USD = 0.85 EUR
+  GBP: 0.75, // 1 USD = 0.75 GBP
+  JPY: 110 // 1 USD = 110 JPY
+};
+
+/** Converts a given amount from USD to a specified currency. */
+
+function convertCurrency(amount, currency) {
+
+  // Check if currency exists in our exchange rates
+  if (!rates[currency]) {
+    console.log('Currency not supported');
+    return null;
+  }
+  // Convert the amount
+  const converted = amount * rates[currency];
+  return converted.toFixed(2); //returns the amount with 2 decimals
+}
+
 
 /* The following is for running unit tests. 
    To fully complete this project, it is expected that all tests pass.
@@ -267,7 +288,7 @@ module.exports = {
    emptyCart,
   }
    
-  /* Uncomment the following line if completing the currency converter bonus */
-   // currency //
+  
+   
 
 
