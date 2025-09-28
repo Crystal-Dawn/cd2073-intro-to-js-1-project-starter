@@ -46,6 +46,11 @@ const products = [
 
 const cart = [];
 
+//Helper function//
+function getProductById(productId) {
+  return products.find(item => item.productId === productId);
+}
+
 /* Create a function named addProductToCart that takes in the product productId as an argument
   - addProductToCart should get the correct product based on the productId
   - addProductToCart should then increase the product's quantity
