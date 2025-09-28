@@ -46,7 +46,7 @@ const products = [
 
 const cart = [];
 
-//Helper function//
+/*Helper function */
 function getProductById(productId) {
   return products.find(item => item.productId === productId);
 }
@@ -66,24 +66,21 @@ function getProductById(productId) {
  * - If the product does not exist, the function returns false.
  */
 function addProductToCart(productId) {
-  // Search for the product in the products array
   const product = getProductById(productId);
 
-  // If product does not exist, log error and exit
+  
   if (!product) {
-    return false; //Failure
+    return false; 
   } 
 
-  //Increase quantity for product
   product.quantity += 1;
 
-  // Check if product is already in the cart
   const cartItem = cart.find(item => item.productId === productId);
 
   if (!cartItem) {
-    cart.push(product); // Push product
+    cart.push(product); 
   }
-  return true; //Success
+  return true; 
 }
 
 /* Create a function named increaseQuantity that takes in the productId as an argument
@@ -100,14 +97,12 @@ function addProductToCart(productId) {
  */
 
 function increaseQuantity(productId) {
-  // Find Product in the cart
   const cartItem = cart.find(item => item.productId === productId);
   if (!cartItem) {
-    //Product not found in cart, Log error
-    return false; // Failure
+    return false; 
   }
-    cartItem.quantity += 1; // Increment quantity by 1
-    return true; // Success
+    cartItem.quantity += 1; 
+    return true; 
 }
 
 /* Create a function named decreaseQuantity that takes in the productId as an argument
@@ -125,23 +120,18 @@ function increaseQuantity(productId) {
  */
 
 function decreaseQuantity(productId) {
-  // Find index of product in cart
   const cartItemIndex = cart.findIndex(item => item.productId === productId);
  
-  // Check if product was found
   if (cartItemIndex === -1) {
   return false;
   }
 
-  //Access product in cart
   const cartItem = cart[cartItemIndex]; 
-  // Decrease quantity by 1
   cartItem.quantity -= 1; 
-  // If quantity is 0, remove product from cart
   if (cartItem.quantity === 0) {
     cart.splice(cartItemIndex, 1);
   }
-  return true; //Success
+  return true; 
 }
 
 
@@ -160,21 +150,17 @@ function decreaseQuantity(productId) {
  */
 
 function removeProductFromCart(productId) {
-  // FInd index of product in cart
   const cartItemIndex = cart.findIndex(item => item.productId === productId);
-  // Check if product exists in cart
   if (cartItemIndex === -1) {
-    return false; // Flag removal fail
+    return false; 
   }
-  // Find product in products array to reset quantity
+
   const product = getProductById(productId);
-  // Reset product quantity to zero 
   if (product) {
     product.quantity = 0;
   }
- // Remove product
   cart.splice(cartItemIndex, 1);
-  return true; // Flag removal success
+  return true; 
 }
 
 
@@ -193,12 +179,11 @@ function removeProductFromCart(productId) {
  */
 function cartTotal() {
   let total = 0; 
-  for (let i = 0; i < cart.length; i++) {  //Loop through each item in cart
-    let itemTotal = cart[i].price * cart[i].quantity; //Calculate total for product
-    // Add product's total to overall total
+  for (let i = 0; i < cart.length; i++) {  
+    let itemTotal = cart[i].price * cart[i].quantity; 
     total += itemTotal;
   }
-  return total; // Return grand total
+  return total;
 }
 
 
@@ -211,11 +196,10 @@ function cartTotal() {
  */
 
 function emptyCart() {
-  // Loop through all products
   for (let i = 0; i < products.length; i++) {  
-    products[i].quantity = 0; //Reset each product quantity to 0
+    products[i].quantity = 0; 
   }
-  cart.length = 0; //Empty cart
+  cart.length = 0; 
 }
 
 /* Create a function named pay that takes in an amount as an argument
@@ -237,13 +221,10 @@ function emptyCart() {
 
 function pay(amount) {
   let remainingBalance = amount - cartTotal(); 
-    
-  if (remainingBalance >= 0) {
+    if (remainingBalance >= 0) {
   emptyCart(); 
   }
-  
-  return remainingBalance; // Return negative (owed) or positive (change) amount
-}
+  return remainingBalance; 
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
 
@@ -258,14 +239,12 @@ const rates = {
 
 function convertCurrency(amount, currency) {
 
-  // Check if currency exists in our exchange rates
   if (!rates[currency]) {
     console.log('Currency not supported');
     return null;
   }
-  // Convert the amount
   const converted = amount * rates[currency];
-  return converted.toFixed(2); //returns the amount with 2 decimals
+  return converted.toFixed(2); 
 }
 
 
