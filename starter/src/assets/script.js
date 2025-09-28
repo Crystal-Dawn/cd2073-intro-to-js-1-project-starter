@@ -223,8 +223,9 @@ function pay(amount) {
   let remainingBalance = amount - cartTotal(); 
     if (remainingBalance >= 0) {
   emptyCart(); 
-  }
+    }
   return remainingBalance; 
+}
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
 
