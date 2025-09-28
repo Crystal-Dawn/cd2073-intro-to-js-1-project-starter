@@ -71,7 +71,6 @@ function addProductToCart(productId) {
 
   // If product does not exist, log error and exit
   if (!product) {
-    console.log('Product not found');
     return false; //Failure
   } 
 
@@ -105,7 +104,6 @@ function increaseQuantity(productId) {
   const cartItem = cart.find(item => item.productId === productId);
   if (!cartItem) {
     //Product not found in cart, Log error
-    console.log('Product not found');
     return false; // Failure
   }
     cartItem.quantity += 1; // Increment quantity by 1
@@ -132,7 +130,6 @@ function decreaseQuantity(productId) {
  
   // Check if product was found
   if (cartItemIndex === -1) {
-  console.log('Product not found');
   return false;
   }
 
@@ -167,7 +164,6 @@ function removeProductFromCart(productId) {
   const cartItemIndex = cart.findIndex(item => item.productId === productId);
   // Check if product exists in cart
   if (cartItemIndex === -1) {
-    console.log('Product not found');
     return false; // Flag removal fail
   }
   // Find product in products array to reset quantity
