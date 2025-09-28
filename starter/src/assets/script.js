@@ -67,7 +67,7 @@ function getProductById(productId) {
  */
 function addProductToCart(productId) {
   // Search for the product in the products array
-  const product = products.find(item => item.productId === productId);
+  const product = getProductById(productId);
 
   // If product does not exist, log error and exit
   if (!product) {
@@ -171,7 +171,7 @@ function removeProductFromCart(productId) {
     return false; // Flag removal fail
   }
   // Find product in products array to reset quantity
-  const product = products.find(item => item.productId === productId);
+  const product = getProductById(productId);
   // Reset product quantity to zero 
   if (product) {
     product.quantity = 0;
